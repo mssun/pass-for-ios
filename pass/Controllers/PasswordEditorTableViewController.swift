@@ -371,7 +371,7 @@ class PasswordEditorTableViewController: UITableViewController {
         var previousPathLength = Int.max
         while passwordURL.path != "." {
             passwordURL = passwordURL.deletingLastPathComponent()
-            if passwordURL.path != "." && passwordURL.path.count >= previousPathLength {
+            if passwordURL.path != ".", passwordURL.path.count >= previousPathLength {
                 Utils.alert(title: "CannotSave".localize(), message: "CannotParseFilename.".localize(), controller: self, completion: nil)
                 return false
             }

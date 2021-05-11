@@ -8,8 +8,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Installing packages
-      run: brew update && brew install -f swiftformat
-    - name: swiftformat
+      run: |
+        brew update
+        if brew ls --version swiftformat > /dev/null; then 
+          brew upgrade swiftformat
+        else
+          brew install swiftformat
+        fi
+    - name: Formatting code
       run: |
          swiftformat --lint .
 
@@ -18,7 +24,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Installing packages
-      run: brew update && brew install -f swiftlint || brew link --overwrite swiftlint
-    - name: swiftlint
+      run: |
+        brew update
+        if brew ls --version swiftlint > /dev/null; then
+          brew upgrade swiftlint
+        else
+          # For some reason the SwiftLint binary is kept at its location after shutdown.
+          brew install swiftlint || brew link --overwrite swiftlint
+        fi
+    - name: Linting code
       run: |
          swiftlint --strict

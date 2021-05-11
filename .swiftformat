@@ -116,6 +116,10 @@
 
 --elseposition same-line
 
+### Empty braces: "no-space" (default), "spaced" or "linebreak"
+
+--emptybraces no-space
+
 ### Case of 'e' in numbers: "lowercase" or "uppercase" (default)
 
 --exponentcase lowercase

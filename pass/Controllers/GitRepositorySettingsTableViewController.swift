@@ -130,7 +130,7 @@ class GitRepositorySettingsTableViewController: UITableViewController, PasswordA
         if let scheme = gitURL.scheme {
             switch scheme {
             case "http", "https", "ssh":
-                if gitURL.user == nil && usernameTextField.text == nil {
+                if gitURL.user == nil, usernameTextField.text == nil {
                     Utils.alert(title: "CannotSave".localize(), message: "CannotFindUsername.".localize(), controller: self)
                     return
                 }

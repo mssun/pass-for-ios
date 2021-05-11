@@ -34,7 +34,7 @@ public class KeyFileManager {
     }
 
     public func importKey(from string: String) throws {
-        guard string.unicodeScalars.allSatisfy({ $0.isASCII }) else {
+        guard string.unicodeScalars.allSatisfy(\.isASCII) else {
             throw AppError.encoding
         }
         keyHandler(string, keyType.getKeychainKey())

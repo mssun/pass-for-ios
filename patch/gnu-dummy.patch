@@ -1,0 +1,32 @@
+diff --git a/crypto/key.go b/crypto/key.go
+index 49af11e..fd59ec4 100644
+--- a/crypto/key.go
++++ b/crypto/key.go
+@@ -150,10 +150,12 @@ func (key *Key) Unlock(passphrase []byte) (*Key, error) {
+ 		return nil, err
+ 	}
+ 
+-	err = unlockedKey.entity.PrivateKey.Decrypt(passphrase)
+-	if err != nil {
+-		return nil, errors.Wrap(err, "gopenpgp: error in unlocking key")
+-	}
++	if !unlockedKey.entity.PrivateKey.Dummy() {
++        err = unlockedKey.entity.PrivateKey.Decrypt(passphrase)
++        if err != nil {
++            return nil, errors.Wrap(err, "gopenpgp: error in unlocking key")
++        }
++    }
+ 
+ 	for _, sub := range unlockedKey.entity.Subkeys {
+ 		if sub.PrivateKey != nil {
+@@ -286,6 +288,10 @@ func (key *Key) IsLocked() (bool, error) {
+ 		}
+ 	}
+ 
++    if key.entity.PrivateKey.Dummy() {
++        return true, nil
++    }
++
+ 	return key.entity.PrivateKey.Encrypted, nil
+ }
+ 

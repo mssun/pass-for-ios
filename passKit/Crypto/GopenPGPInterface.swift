@@ -6,12 +6,12 @@
 //  Copyright © 2019 Bob Sun. All rights reserved.
 //
 
-import Crypto
+import Gopenpgp
 
 struct GopenPGPInterface: PGPInterface {
     private static let errorMapping: [String: Error] = [
         "gopenpgp: error in unlocking key: openpgp: invalid data: private key checksum failure": AppError.wrongPassphrase,
-        "openpgp: incorrect key": AppError.keyExpiredOrIncompatible,
+        "gopenpgp: error in reading message: openpgp: incorrect key": AppError.keyExpiredOrIncompatible,
     ]
 
     private var publicKeys: [String: CryptoKey] = [:]
